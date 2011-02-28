@@ -1,0 +1,8 @@
+db:
+  database: production
+  username: worker
+  password: behappy
+smtp:
+  host: mail.example.com
+  username: mailworker
+  password: secret

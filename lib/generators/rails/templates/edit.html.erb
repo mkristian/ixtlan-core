@@ -1,0 +1,24 @@
+<h1>Editing <%= singular_table_name %></h1>
+
+<%%= render 'form' %>
+
+<% if defined? ::Ixtlan::Guard -%>
+<%% if allowed?(:<%= table_name %>, :show) %>
+<% end -%>
+<% if options[:singleton] -%>
+<%%= link_to 'Show', <%= singular_table_name %>_path %>
+<% else -%>
+<%%= link_to 'Show', @<%= singular_table_name %> %>
+<% end -%>
+<% if defined? ::Ixtlan::Guard -%>
+<%% end %>
+<% end -%>
+<% unless options[:singleton] -%>
+<% if defined? ::Ixtlan::Guard -%>
+<%% if allowed?(:<%= table_name %>, :index) %>
+<% end -%>
+| <%%= link_to 'Back', <%= index_helper %>_path %>
+<% if defined? ::Ixtlan::Guard -%>
+<%% end %>
+<% end -%>
+<% end -%>

@@ -1,0 +1,30 @@
+<p id="notice"><%%= notice %></p>
+
+<% for attribute in attributes -%>
+<p>
+  <b><%= attribute.human_name %>:</b>
+  <%%= @<%= singular_table_name %>.<%= attribute.name %> %>
+</p>
+
+<% end -%>
+
+<% if defined? ::Ixtlan::Guard -%>
+<%% if allowed?(:<%= table_name %>, :update) %>
+<% end -%>
+<% if options[:singleton] -%>
+<%%= link_to 'Edit', edit_<%= singular_table_name %>_path %>
+<% else -%>
+<%%= link_to 'Edit', edit_<%= singular_table_name %>_path(@<%= singular_table_name %>) %>
+<% end -%>
+<% if defined? ::Ixtlan::Guard -%>
+<%% end %>
+<% end -%>
+<% unless options[:singleton] -%>
+<% if defined? ::Ixtlan::Guard -%>
+<%% if allowed?(:<%= table_name %>, :index) %>
+<% end -%>
+ | <%%= link_to 'Back', <%= index_helper %>_path %>
+<% if defined? ::Ixtlan::Guard -%>
+<%% end %>
+<% end -%>
+<% end -%>
