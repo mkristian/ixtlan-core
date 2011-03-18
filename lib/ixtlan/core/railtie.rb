@@ -31,7 +31,7 @@ module Ixtlan
         ActiveRecord::Generators::ModelGenerator.class_option :singleton, :type => :boolean, :default => false
       end
 
-      config.before_configuration do |app|
+      config.before_initialize do |app|
         app.config.class.class_eval do
           attr_accessor :configuration_model
           def configuration_model=(clazz)

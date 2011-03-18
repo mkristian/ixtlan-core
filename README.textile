@@ -26,4 +26,6 @@ of any sensitive data go for the private mode.
 
 p. this control is only active when there is logged in user, i.e. controller.current_user != null. also when the controller does not set the cache-header the rails default is used.
 
-h3. the cache header uses http://code.google.com/p/doctype/wiki/ArticleHttpCaching as specification
+h3. credits
+
+p. the cache header uses http://code.google.com/p/doctype/wiki/ArticleHttpCaching as specification

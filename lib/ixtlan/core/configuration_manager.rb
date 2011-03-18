@@ -16,6 +16,11 @@ module Ixtlan
               Thread.current[:ixtlan_configruation] = nil
             end
           end
+
+          private
+          def self.registry
+            @registry ||= {}
+          end
         end
       end
       
@@ -27,7 +32,7 @@ module Ixtlan
       
       def fire_on_change
         registry.each do |name, callback|
-          logger.debug{ "call #{name}" }
+          logger.debug{ "configure #{name}" }
           callback.call(self)
         end
       end              
@@ -35,9 +40,8 @@ module Ixtlan
       private
       
       def registry
-        @registry ||= {}
+        self.class.registry
       end
-      
     end
   end
 end
