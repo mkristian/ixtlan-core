@@ -2,21 +2,26 @@ require 'fileutils'
 Given /^I create new rails application with template "(.*)"$/ do |template|
   name = template.sub(/.template$/, '')
   directory = File.join('target', name)
-  rails_version = ENV['RAILS_VERSION'] || '3.0.1'
 
-  ruby = defined?(JRUBY_VERSION) ? "jruby" : "ruby"
-  rails_command = "#{ENV['GEM_HOME']}/bin/rails"
-  rails_command = "-S rails" unless File.exists?(rails_command)
-  command = "#{rails_command} _#{rails_version}_ new #{directory} -f -m templates/#{template}"
+  rails_version = '3.0.5'
+
+  command = "#{ENV['GEM_HOME']}/bin/rmvn"
+  jruby = File.read(command).split("\n")[0].sub(/^#!/, '')
+  args = "rails new #{directory} -f -m templates/#{template} -- -DrailsVersion=#{rails_version} -Dgem.home=#{ENV['GEM_HOME']} -Dgem.path=#{ENV['GEM_PATH']} -Dplugin.version=0.26.0-SNAPSHOT"
   FileUtils.rm_rf(directory)
 
-  system "#{ruby} #{command}"
+  full = "#{jruby} #{command} #{args}"
+  # puts full
+  system full
   
-  @result = File.read("target/#{name}/log/development.log")
+  @result = File.read("target/#{name}/output.log")
   puts @result
 end
 
 Then /^the output should contain \"(.*)\"$/ do |expected|
-  (@result =~ /.*#{expected}.*/).should_not be_nil
+  expected.split(/\"?\s+and\s+\"?/).each do |exp|
+    puts exp
+    (@result =~ /.*#{exp}.*/).should_not be_nil
+  end
 end
 

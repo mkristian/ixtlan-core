@@ -1,5 +1,5 @@
-Feature: Generators for Ixtlan Audit
+Feature: Generators for Ixtlan Core
 
-  Scenario: The slf4r rails template creates a rails application which uses slf4r-wrapper
+  Scenario: Create a rails application and adding the ixtlan-core adds ixtlan generators
     Given I create new rails application with template "simple.template"
-    Then the output should contain "setup slf4r logger wrapper with ActiveSupport::BufferedLogger"
+    Then the output should contain "ixtlan:setup" and "ixtlan:configuration_model" and "ixtlan:configuration_scaffold"
