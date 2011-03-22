@@ -42,13 +42,16 @@ module Ixtlan
 
       def cache_headers
         if(respond_to?(:current_user) && current_user)
-          case self.class.instance_variable_get(:@mode)
+          mode = self.class.instance_variable_get(:@mode)
+          case mode
           when :private
             no_caching(self.class.instance_variable_get(:@no_store))
           when :protected
             only_browser_can_cache(self.class.instance_variable_get(:@no_store))
           when :public
             allow_browser_and_proxy_to_cache(self.class.instance_variable_get(:@no_store))
+          else
+            send mode if mode
           end
 #        else
 #          allow_browser_and_proxy_to_cache(self.class.instance_variable_get(:@no_store))
@@ -59,8 +62,7 @@ module Ixtlan
         base.class_eval do
           def self.cache_headers(mode = nil, no_store = true)
             if(mode)
-              raise "supported modi are :private, :protected and :public" unless [:private, :protected, :public].member? mode.to_sym
-              @mode = mode
+              @mode = mode.to_sym
             end
             @no_store = no_store
           end

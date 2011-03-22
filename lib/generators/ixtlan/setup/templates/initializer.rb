@@ -22,8 +22,8 @@
 
 # idle session timeout configuration (in minutes)
 # -----------------------------------------------
-# config_instance.register("idle_session_timeout") do |config|
-#   Rails.configuration.idle_session_timeout = config.idle_session_timeout
+# config_instance.register("session_idle_timeout") do |config|
+#   Rails.configuration.session_idle_timeout = config.session_idle_timeout
 # end
 
 # audit log manager
@@ -54,7 +54,7 @@
 
 # idle session timeout configuration
 # ----------------------------------
-# config.idle_session_timeout = 30 #minutes
+# config.session_idle_timeout = 30 #minutes
 
 # audit log manager
 # -----------------

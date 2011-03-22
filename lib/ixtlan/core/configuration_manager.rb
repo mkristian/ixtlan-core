@@ -13,7 +13,7 @@ module Ixtlan
               Thread.current[:ixtlan_configuration] ||= instance_old
             end
             def clear_instance
-              Thread.current[:ixtlan_configruation] = nil
+              Thread.current[:ixtlan_configuration] = nil
             end
           end
 
