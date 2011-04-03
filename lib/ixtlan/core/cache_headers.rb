@@ -51,7 +51,7 @@ module Ixtlan
           when :public
             allow_browser_and_proxy_to_cache(self.class.instance_variable_get(:@no_store))
           else
-            send mode
+            send mode if mode
           end
         end
       end
