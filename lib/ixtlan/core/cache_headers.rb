@@ -42,7 +42,7 @@ module Ixtlan
 
       def cache_headers
         if(respond_to?(:current_user) && current_user)
-          mode = self.class.instance_variable_get(:@mode)
+          mode = self.class.instance_variable_get(:@_cache_mode)
           case mode
           when :private
             no_caching(self.class.instance_variable_get(:@no_store))
@@ -51,10 +51,8 @@ module Ixtlan
           when :public
             allow_browser_and_proxy_to_cache(self.class.instance_variable_get(:@no_store))
           else
-            send mode if mode
+            send mode
           end
-#        else
-#          allow_browser_and_proxy_to_cache(self.class.instance_variable_get(:@no_store))
         end
       end
 
@@ -62,21 +60,16 @@ module Ixtlan
         base.class_eval do
           def self.cache_headers(mode = nil, no_store = true)
             if(mode)
-              @mode = mode.to_sym
+              @_cache_mode = mode.to_sym
             end
             @no_store = no_store
-          end
-          alias :render_old :render
-          def render(*args)
-            cache_headers
-            render_old(*args)
           end
         end
       end
 
       private
       def cachable_response?
-        request.method == :get &&
+        request.method.to_s.downcase == "get" &&
           [200, 203, 206, 300, 301].member?(response.status)
       end
 

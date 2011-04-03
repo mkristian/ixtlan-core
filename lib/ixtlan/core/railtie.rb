@@ -1,4 +1,6 @@
+require 'ixtlan/core/extra_headers'
 require 'ixtlan/core/cache_headers'
+require 'ixtlan/core/x_frame_headers'
 require 'ixtlan/core/configuration_rack'
 require 'ixtlan/core/configuration_manager'
 
@@ -31,6 +33,13 @@ module Ixtlan
         ActiveRecord::Generators::ModelGenerator.class_option :singleton, :type => :boolean, :default => false
       end
 
+      config.before_configuration do |app|
+        app.config.class.class_eval do
+          attr_accessor :x_frame_headers
+        end
+        app.config.x_frame_headers = :deny
+      end
+
       config.before_initialize do |app|
         app.config.class.class_eval do
           attr_accessor :configuration_model
@@ -39,7 +48,10 @@ module Ixtlan
             @configuration_model = clazz
           end
         end
+        ::ActionController::Base.send(:include, Ixtlan::Core::ExtraHeaders)
+        ::ActionController::Base.send(:include, Ixtlan::Core::XFrameHeaders)
         ::ActionController::Base.send(:include, Ixtlan::Core::CacheHeaders)
+
         app.config.middleware.use Ixtlan::Core::ConfigurationRack
       end
     end

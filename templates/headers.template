@@ -8,6 +8,9 @@ GEM
 
 require File.join(File.dirname(__FILE__), 'helper.rb')
 
-run_generate
+run_generate 'scaffold', 'user', 'name:string', '--skip', '--migration', '-t', 'test_unit'
+
+
+run_rake 'db:migrate', 'test'
 
 # vim: syntax=Ruby

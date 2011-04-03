@@ -4,17 +4,37 @@ p. this project is just a compilation of things I am doing all over the place in
 
 p. this gem is quite invasive in terms of default templates of rails3. first it adds json serializers and looks for a lot of switches from other gems like 'ixtlan-audit', 'ixtlan-session-timeout', 'ixtlan-error-handler', 'rails-resty-generators', etc
 
+p. since the model generator also needs to work nice with rails-resty-generators this gem adds to the "reference"/"belongs_to" type also a "has_one" and a "has_many" type. this allows to generate the ruby models along with java GWT models in a similar manner (note: restrictions and short comings are still there . . .).
+
 h2. setup generator
 
-p. this just adds an preinitializer to the rails application which allows to keep the config/database.yml almost as is and allows to put the passwords for the production database into a 'production.yml' - just ignore that production.yml from git and keep it only on the deployed server. same you can do for an external mail provider.
+p. this just adds an preinitializer to the rails application which allows to keep the config/database.yml almost as is and allows to put the passwords for the production database into a 'production.yml' - just ignore that production.yml from git and keep it only on the deployed server. same you can do for the credentials of an external mail provider, etc. it is also helpful in cases when you have an sqlite3 database and want to keep it in an special location but do not want to **hardcode** this into your database.yml
 
-p. further if you can configure a configuration (singleton) model which allows to register components which can notified when a configuration changes.
+p. further if you can configure a configuration (singleton) model which allows to register components which can notified when a configuration changes. see the config/initializers/ixtlan.rb which gets generated with the setup generators.
 
-p. since the model generator also needs to work nice with rails-resty-generators it add beside the "reference/belongs_to" also a "has_one" and "has_many" types. this allows to generate the ruby models along with java GWT models in a similar manner (note: restrictions and short comings are there . . .).
+h2. extra headers
 
-h2. cache headers
+p. that is the only "real" feature of the ixtlan-core gem. the extra headers will be set before calling __render__, __send_file__ or __send_data__.
 
-p. that is the only "real" feature of the ixtlan-core gem. with this you can control the cache header with three predefined modi:
+h3. x-frame-option
+
+p. to prevent click-jacking (see: http://www.owasp.org/index.php/Clickjacking) the application can add a response header to tell the browser that the application is not allowed to run in a frame.
+
+p. this is set per default with **DENY** you can set this in your config with
+
+bc. config.x_frame_headers = :deny
+
+or
+
+bc. config.x_frame_headers = :sameorigin
+
+or
+
+bc. config.x_frame_headers = nil
+
+h3. cache headers
+
+p. with this you can control the cache header with three predefined modi:
 
 * private: no caching of data for any proxy or browser
 
@@ -22,10 +42,26 @@ p. that is the only "real" feature of the ixtlan-core gem. with this you can con
 
 * public: proxies and browsers can cache as desired
 
-of any sensitive data go for the private mode.
+p. for any sensitive data go for the private mode.
 
-p. this control is only active when there is logged in user, i.e. controller.current_user != null. also when the controller does not set the cache-header the rails default is used.
+p. add in the controller
 
-h3. credits
+bc.  CacheHeaders :private
+
+p. this control is only active when there is logged in user, i.e. controller.current_user != null. when the controller does not set the cache-header the rails default is used.
+
+p. the headers only get set when the response status is one of [200, 203, 206, 300, 301] and the request method is GET (assuming the restful approach).
+
+h4. customize cache headers
+
+p. just define a method 'my_headers', use one of the methods from https://github.com/mkristian/ixtlan-core/blob/master/lib/ixtlan/core/cache_headers.rb and configure the controller to use it.
+
+bc. def my_headers
+      no_store = false
+      no_caching(no_store)
+    end
+    cache_headers :my_headers
+
+h4. credits for cache headers
 
 p. the cache header uses http://code.google.com/p/doctype/wiki/ArticleHttpCaching as specification

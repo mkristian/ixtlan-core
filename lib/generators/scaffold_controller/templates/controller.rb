@@ -40,7 +40,7 @@ class <%= controller_class_name %>Controller < ApplicationController
   # POST <%= route_url %>.json
   def create
     @<%= singular_table_name %> = <%= orm_class.build(class_name, "params[:#{singular_table_name}]") %>
-<% unless options[:modified_by] -%>
+<% if options[:modified_by] -%>
     @<%= singular_table_name %>.current_user = current_user
 <% end -%>
 
