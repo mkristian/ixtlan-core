@@ -1,7 +1,7 @@
 # -*- mode: ruby -*-
 Gem::Specification.new do |s|
   s.name = 'ixtlan-core'
-  s.version = '0.2.0'
+  s.version = '0.3.0'
 
   s.summary = 'cache header control, dynamic configuration, and rails generator templates'
   s.description = 'base for some gems related to protect privacy and increase security along some other utils'
