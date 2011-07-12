@@ -151,10 +151,10 @@ module Maven
     end
 
     def exec(*args)
-      a = command_line(args)
+      a = command_line(args.dup.flatten)
       a << options_array
       a.flatten!
-      puts a.join ' '
+      #puts a.join ' '
       #launch_jruby(a)
       full = "#{@jruby} #{@command} #{args.join ' '} -- #{options_string}"
       system full
