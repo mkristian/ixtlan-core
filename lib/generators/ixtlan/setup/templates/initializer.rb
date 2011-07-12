@@ -4,11 +4,12 @@
 # -------------------
 # CONFIGURATION = Configuration
 # config.configuration_model = CONFIGURATION
-<% if defined? DataMapper -%>
-# config_instance = CONFIGURATION.get(1) || CONFIGURATION.new
-<% else -%>
-# config_instance = CONFIGURATION.find(1) || CONFIGURATION.new
-<%end -%>
+begin
+  config_instance = CONFIGURATION.instance
+rescue
+  # allow rake tasks to work without configuration migrated
+  return
+end
 
 # notification email on errors and dump directory for the system dump
 # the error dumps will be cleanup after the days to keeps dump expired

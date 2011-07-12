@@ -20,6 +20,9 @@
   </div><!-- end - <%= attribute.name %> -->
 <% end -%>
   <div class="actions">
+<% if options[:optimistic] && options[:timestamps] -%>
+    <%%= f.hidden_field :updated_at %>
+<% end -%>
     <%%= f.submit %>
   </div>
 <%% end %>

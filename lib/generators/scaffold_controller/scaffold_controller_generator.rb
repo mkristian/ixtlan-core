@@ -6,14 +6,14 @@ module ScaffoldController
     class ScaffoldControllerGenerator < ::Rails::Generators::NamedBase
       include ::Rails::Generators::ResourceHelpers
 
-      source_root File.expand_path('../templates', __FILE__)
-
       check_class_collision :suffix => "Controller"
 
       class_option :orm, :banner => "NAME", :type => :string, :required => true,
                          :desc => "ORM to generate the controller for"
 
       class_option :singleton, :type => :boolean, :default => false
+      class_option :optimistic, :type => :boolean, :default => false
+      class_option :timestamps, :type => :boolean, :default => true
 
       def create_controller_files
         if options[:singleton]

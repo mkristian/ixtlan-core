@@ -61,7 +61,21 @@ class <%= controller_class_name %>Controller < ApplicationController
   # PUT <%= route_url %>/1.xml
   # PUT <%= route_url %>/1.json
   def update
+<% if options[:optimistic] && options[:timestamps] -%>
+    @<%= singular_table_name %> = <%= orm_class.find(class_name, "(params[:#{singular_table_name}]||[]).delete(:updated_at), params[:id]").sub(/\.(get|find)/, '.optimistic_\1') %>
+
+    if @<%= singular_table_name %>.nil?
+      @<%= singular_table_name %> = <%= orm_class.find(class_name, "params[:id]") %>
+      respond_to do |format|
+        format.html { render :action => "edit" }
+        format.xml  { render :xml => nil, :status => :conflict }
+        format.json  { render :json => nil, :status => :conflict }
+      end
+      return
+    end
+<% else -%>
     @<%= singular_table_name %> = <%= orm_class.find(class_name, "params[:id]") %>
+<% end -%>
 <% if options[:modified_by] -%>
     @<%= singular_table_name %>.current_user = current_user
 <% end -%>
@@ -83,7 +97,21 @@ class <%= controller_class_name %>Controller < ApplicationController
   # DELETE <%= route_url %>/1.xml
   # DELETE <%= route_url %>/1.json
   def destroy
+<% if options[:optimistic] && options[:timestamps] -%>
+    @<%= singular_table_name %> = <%= orm_class.find(class_name, "(params[:#{singular_table_name}]||[]).delete(:updated_at), params[:id]").sub(/\.(get|find)/, '.optimistic_\1') %>
+
+    if @<%= singular_table_name %>.nil?
+      @<%= singular_table_name %> = <%= orm_class.find(class_name, "params[:id]") %>
+      respond_to do |format|
+        format.html { render :action => "edit" }
+        format.xml  { render :xml => nil, :status => :conflict }
+        format.json  { render :json => nil, :status => :conflict }
+      end
+      return
+    end
+<% else -%>
     @<%= singular_table_name %> = <%= orm_class.find(class_name, "params[:id]") %>
+<% end -%>
 <% if options[:modified_by] -%>
     @<%= singular_table_name %>.current_user = current_user
 <% end -%>
