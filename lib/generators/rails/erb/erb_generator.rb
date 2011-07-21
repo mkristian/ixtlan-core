@@ -7,6 +7,7 @@ module Erb
       include Rails::Generators::ResourceHelpers
 
       class_option :optimistic, :type => :boolean, :default => false
+      class_option :singleton, :type => :boolean, :default => false
       class_option :timestamps, :type => :boolean, :default => true
 
       argument :attributes, :type => :array, :default => [], :banner => "field:type field:type"
@@ -25,7 +26,11 @@ module Erb
     protected
 
       def available_views
-        %w(index edit show new _form)
+        if options[:singleton]
+          %w(edit show _form)
+        else
+          %w(index edit show new _form)
+        end
       end
     end
   end

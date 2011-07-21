@@ -18,7 +18,7 @@ end
 #   Rails.configuration.error_dumper.dump_dir = config.errors_dir
 #   Rails.configuration.error_dumper.email_from = config.errors_from
 #   Rails.configuration.error_dumper.email_to = config.errors_to
-#   Rails.configuration.error_dumper.keep_dumps = config.errors_keep_dumps # days
+#   Rails.configuration.error_dumper.keep_dumps = config.errors_keep_dump # days
 # end
 
 # idle session timeout configuration (in minutes)

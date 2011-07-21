@@ -1,0 +1,9 @@
+* singleton unit tests
+
+* singleton erb templates are not found
+
+* plural attributes are singular in Model.java - have them plural as well
+
+* production.yml => password.yml and see taperoom how to deal with default - maybe
+
+* attr_accessors in model - mass-assignments

@@ -20,7 +20,7 @@ module Ixtlan
         end
 
         if defined? ::Ixtlan::Errors
-          args << "errors_keep_dumps:integer"
+          args << "errors_keep_dump:integer"
           args << "errors_dir:string"
           args << "errors_from:string"
           args << "errors_to:string"

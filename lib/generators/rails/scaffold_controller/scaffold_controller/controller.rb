@@ -75,7 +75,9 @@ class <%= controller_class_name %>Controller < ApplicationController
     end
 <% else -%>
     @<%= singular_table_name %> = <%= orm_class.find(class_name, "params[:id]") %>
+    (params[:<%= singular_table_name %>]||[]).delete(:updated_at)
 <% end -%>
+    (params[:<%= singular_table_name %>]||[]).delete(:id)
 <% if options[:modified_by] -%>
     @<%= singular_table_name %>.current_user = current_user
 <% end -%>
