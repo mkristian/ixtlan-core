@@ -15,6 +15,10 @@ module Rails
         hook_for :resty, :type => :boolean, :default => true
       end
 
+      if defined? ::Ixtlan::Guard
+        hook_for :guard, :type => :boolean, :default => true 
+      end
+
       def add_resource_route
         return if options[:actions].present?
         route_config =  class_path.collect{|namespace| "namespace :#{namespace} do " }.join(" ")
