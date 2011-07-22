@@ -16,7 +16,7 @@ module Rails
       end
 
       if defined? ::Ixtlan::Guard
-        hook_for :guard, :type => :boolean, :default => true 
+        hook_for :guard, :type => :boolean, :default => true
       end
 
       def add_resource_route

@@ -29,20 +29,6 @@ module ScaffoldController
       hook_for :helper, :as => :scaffold, :in => :rails do |invoked|
         invoke invoked, [ controller_name ]
       end
-
-      # if defined? ::Resty
-      #   # resty gwt controller
-      #   hook_for :resty, :type => :boolean, :default => true do |controller|
-      #     invoke controller, [class_name]
-      #   end
-      # end
-
-      # if defined? ::Ixtlan::Guard
-      #   # allow the ixtlan guards to be generated
-      #   hook_for :guard, :type => :boolean, :default => true do |controller|
-      #     invoke controller, [class_name]
-      #   end
-      # end
     end
   end
 end
