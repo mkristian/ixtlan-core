@@ -29,7 +29,7 @@
 <%% if allowed?(:<%= table_name %>, :destroy) %>
 <% end -%>
     <td><% if options[:optimistic] && options[:timestamps] -%>
-<%%= link_to 'Destroy', <%= singular_table_name %>_path(<%= singular_table_name %>) + "?<%= singular_table_name %>[updated_at]=#{<%= singular_table_name %>.updated_at.utc.strftime('%Y-%m-%d %H:%M:%S.%N')}", :confirm => 'Are you sure?', :method => :delete %><% else -%><%%= link_to 'Destroy', <%= singular_table_name %>, :confirm => 'Are you sure?', :method => :delete %>
+<%%= link_to 'Destroy', <%= singular_table_name %>_path(<%= singular_table_name %>) + "?<%= singular_table_name %>[updated_at]=#{<%= singular_table_name %>.updated_at.utc.strftime('%Y-%m-%d %H:%M:%S') + ("%06d" % <%= singular_table_name %>.updated_at.utc)}", :confirm => 'Are you sure?', :method => :delete %><% else -%><%%= link_to 'Destroy', <%= singular_table_name %>, :confirm => 'Are you sure?', :method => :delete %>
 <% end -%></td>
 <% if defined? ::Ixtlan::Guard -%>
 <%% end %>
