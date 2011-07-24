@@ -7,7 +7,8 @@ module Ixtlan
           def self.optimistic_find(updated_at, *args)
             updated_at_date = new(:updated_at => updated_at).updated_at
             # try different ways to use the date
-            first(:conditions => ["id = ? and updated_at = ?", args[0], updated_at_date]) || first(:conditions => ["id = ? and updated_at = ?", args[0], updated_at])
+            # TODO maybe there is a nicer way ??
+            first(:conditions => ["id = ? and updated_at <= ? and updated_at >= ?", args[0], updated_at, updated_at_date - 0.001]) || first(:conditions => ["id = ? and updated_at <= ? and updated_at >= ?", args[0], updated_at_date, updated_at_date - 0.001])
             # TODO make it work with different PKs
           end
         end
