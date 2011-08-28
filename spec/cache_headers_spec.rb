@@ -5,8 +5,7 @@ class MyControllerWithUser < ControllerWithUser
   cache_headers :private
 end
 
-[:render#, :send_file, :send_data
-].each do |method|
+[:render, :send_file, :send_data].each do |method|
   describe "cache-headers using controller method #{method}" do
     context "with simple controller" do
       subject { ControllerWithUser.new(Object.new) }
