@@ -1,6 +1,8 @@
 require 'ixtlan/core/extra_headers'
 require 'ixtlan/core/cache_headers'
 require 'ixtlan/core/x_frame_headers'
+require 'ixtlan/core/x_content_type_headers'
+require 'ixtlan/core/x_xss_protection_headers'
 require 'ixtlan/core/optimistic_active_record'
 require 'ixtlan/core/optimistic_data_mapper'
 require 'ixtlan/core/configuration_rack'
@@ -38,12 +40,12 @@ module Ixtlan
 
       end
 
-      config.before_configuration do |app|
-        app.config.class.class_eval do
-          attr_accessor :x_frame_headers
-        end
-        app.config.x_frame_headers = :deny
-      end
+      # config.before_configuration do |app|
+      #   app.config.class.class_eval do
+      #     attr_accessor :x_frame_headers
+      #   end
+      #   app.config.x_frame_headers = :deny
+      # end
 
       config.before_initialize do |app|
         app.config.class.class_eval do
@@ -55,6 +57,8 @@ module Ixtlan
         end
         ::ActionController::Base.send(:include, Ixtlan::Core::ExtraHeaders)
         ::ActionController::Base.send(:include, Ixtlan::Core::XFrameHeaders)
+        ::ActionController::Base.send(:include, Ixtlan::Core::XContentTypeHeaders)
+        ::ActionController::Base.send(:include, Ixtlan::Core::XXssProtectionHeaders)
         ::ActionController::Base.send(:include, Ixtlan::Core::CacheHeaders)
 
         app.config.middleware.use Ixtlan::Core::ConfigurationRack
