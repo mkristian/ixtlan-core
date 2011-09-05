@@ -10,7 +10,9 @@ class UsersControllerTest < ActionController::TestCase
     assert_response :success
     assert_not_nil assigns(:users)
 
-    assert_equal "DENY", response.headers["X-FRAME-OPTIONS"]
+    assert_equal "DENY", response.headers["X-Frame-Options"]
+    assert_equal "nosniff", response.headers["X-Content-Type-Options"]
+    assert_equal "1; mode=block", response.headers["X-XSS-Protection"]
   end
 
   test "should get new" do

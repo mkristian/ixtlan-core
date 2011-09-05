@@ -1,5 +1,8 @@
 #-*- mode: ruby -*-
 
-apply File.join(File.dirname(__FILE__), 'ixtlan.template')
+gem 'ruby-maven', '0.8.3.0.3.0.28.3'
+gem 'ixtlan-generators', :path => '../../../ixtlan-generators'
+gem 'ixtlan-core', :path => '../..'
+gem 'slf4r' # needed since ruby-maven does not resolve deps from ixtlan-core due to the path argument
 
 # vim: syntax=Ruby

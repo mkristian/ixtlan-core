@@ -22,7 +22,6 @@ module Ixtlan
           private
           def _extra_header(*args)
             opt = (args[0].is_a?(Hash) ? args[0] : args[1]) || {}
-p opt
             cache_headers(opt[:cache_headers])
             x_frame_headers(opt[:x_frame_headers])
             x_content_type_headers(opt[:x_content_type_headers])

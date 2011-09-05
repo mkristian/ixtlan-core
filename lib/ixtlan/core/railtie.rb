@@ -40,12 +40,11 @@ module Ixtlan
 
       end
 
-      # config.before_configuration do |app|
-      #   app.config.class.class_eval do
-      #     attr_accessor :x_frame_headers
-      #   end
-      #   app.config.x_frame_headers = :deny
-      # end
+      config.before_configuration do |app|
+        app.config.class.class_eval do
+          attr_accessor :x_frame_headers, :x_content_type_headers, :x_xss_protection_headers
+        end
+      end
 
       config.before_initialize do |app|
         app.config.class.class_eval do

@@ -1,5 +1,0 @@
-#-*- mode: ruby -*-
-
-apply File.join(File.dirname(__FILE__), 'ixtlan.template')
-
-# vim: syntax=Ruby
