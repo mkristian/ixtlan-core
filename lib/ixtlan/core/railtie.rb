@@ -3,8 +3,8 @@ require 'ixtlan/core/cache_headers'
 require 'ixtlan/core/x_frame_headers'
 require 'ixtlan/core/x_content_type_headers'
 require 'ixtlan/core/x_xss_protection_headers'
-require 'ixtlan/core/optimistic_active_record'
-require 'ixtlan/core/optimistic_data_mapper'
+require 'ixtlan/core/active_record'
+require 'ixtlan/core/data_mapper'
 require 'ixtlan/core/configuration_rack'
 require 'ixtlan/core/configuration_manager'
 module Ixtlan
@@ -63,15 +63,15 @@ module Ixtlan
         app.config.middleware.use Ixtlan::Core::ConfigurationRack
       end
       config.after_initialize do |app|
-        if defined? DataMapper
+        if defined? ::DataMapper
 
           ::DataMapper::Resource.send(:include, 
-                                      Ixtlan::Core::OptimisticDataMapper)
+                                      Ixtlan::Core::DataMapper)
 
-        elsif defined? ActiveRecord
+        elsif defined? ::ActiveRecord
 
           ::ActiveRecord::Base.send(:include, 
-                                    Ixtlan::Core::OptimisticActiveRecord)
+                                    Ixtlan::Core::ActiveRecord)
 
         end
       end
