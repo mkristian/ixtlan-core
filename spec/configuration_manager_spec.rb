@@ -1,5 +1,6 @@
 require 'ixtlan/core/configuration_manager'
 require 'slf4r/ruby_logger'
+require 'active_support/core_ext/string'
 
 class ConfigModel
 
@@ -25,19 +26,23 @@ class ConfigModel
   end
 end
 
-describe Ixtlan::Core::ConfigurationManager do
+describe Ixtlan::Core::Configuration::Manager do
 
   before :all do
-    ConfigModel.send :include, Ixtlan::Core::ConfigurationManager
+    ConfigModel.send :include, Ixtlan::Core::Configuration::Module
   end
 
   it "should register listeners and fire change events" do
     count = 0
-    ConfigModel.instance.register("counter") do
+    clazz = nil
+    subject.register("counter") do |c|
       count += 1
+      clazz = c.class
     end
-    ConfigModel.instance.save
+    subject.setup(:config_model)
+    subject.configure
     count.should == 1
+    clazz.should == ConfigModel
   end
   
   it "should use instance method only once per thread" do

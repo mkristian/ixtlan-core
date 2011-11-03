@@ -6,11 +6,11 @@ module Ixtlan
       end
       
       def call(env)
-        model = Rails.application.config.configuration_model
+        manager = Rails.application.config.configuration_manager
         # configure all registered components with current config
-        model.instance.fire_on_change if model
+        manager.configure if manager
         result = @app.call(env)
-        model.clear_instance if model
+        manager.cleanup if manager
         result
       end
       
