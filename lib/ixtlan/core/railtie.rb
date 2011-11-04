@@ -55,7 +55,7 @@ module Ixtlan
         ::ActionController::Base.send(:include, Ixtlan::Core::XXssProtectionHeaders)
         ::ActionController::Base.send(:include, Ixtlan::Core::CacheHeaders)
 
-        app.config.middleware.use Ixtlan::Core::ConfigurationRack
+        app.config.middleware.use(Ixtlan::Core::ConfigurationRack, app.config.configuration_manager)
       end
 
       config.after_initialize do |app|

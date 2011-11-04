@@ -1,16 +1,16 @@
 module Ixtlan
   module Core
     class ConfigurationRack
-      def initialize(app)
+      def initialize(app, config_manager)
         @app = app
+        @manager = config_manager
       end
       
       def call(env)
-        manager = Rails.application.config.configuration_manager
         # configure all registered components with current config
-        manager.configure if manager
+        @manager.configure
         result = @app.call(env)
-        manager.cleanup if manager
+        @manager.cleanup
         result
       end
       
