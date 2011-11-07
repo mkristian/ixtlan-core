@@ -38,18 +38,18 @@ module Ixtlan
             if @model_name
               @model = @model_name.constantize
             else
-              @model = ::Configuration
+              @model = (::Configuration rescue nil)
             end
-            @model.send :include, Module unless @model.respond_to? :clear_instance
+            @model.send :include, Module unless @model.respond_to? :clear_instance if @model
           end
           @model
         end
 
         public
 
-        def setup(model)
-          if model
-            @model_name = model.to_s.classify
+        def setup(model_name)
+          if model_name
+            @model_name = model_name.to_s.classify
           end
         end
 
@@ -60,7 +60,7 @@ module Ixtlan
         end
         
         def cleanup
-          model.clear_instance
+          model.clear_instance if @model
         end
 
         def configure
