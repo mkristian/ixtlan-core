@@ -1,4 +1,3 @@
-require 'slf4r'
 module Ixtlan
   module Core
     module Configuration
@@ -20,8 +19,16 @@ module Ixtlan
       end
       
       class Manager
-
-        include Slf4r::Logger
+	
+	begin
+          require 'slf4r'
+          include Slf4r::Logger
+	rescue LoadError
+          require 'logger'
+          def logger
+            @logger ||= Logger.new(STDERR)
+          end
+        end            
 
         private
 
