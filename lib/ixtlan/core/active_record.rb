@@ -10,7 +10,7 @@ module Ixtlan
               updated_at_date = new(:updated_at => updated_at).updated_at
               # try different ways to use the date
               # TODO maybe there is a nicer way ??
-              first(:conditions => ["id = ? and updated_at <= ? and updated_at >= ?", args[0], updated_at, updated_at_date - 0.001]) || first(:conditions => ["id = ? and updated_at <= ? and updated_at >= ?", args[0], updated_at_date, updated_at_date - 0.001])
+              first(:conditions => ["id = ? and updated_at <= ? and updated_at >= ?", args[0], updated_at + 0.0005, updated_at_date - 0.0005]) || first(:conditions => ["id = ? and updated_at <= ? and updated_at >= ?", args[0], updated_at_date + 0.0005, updated_at_date - 0.0005])
               # TODO make it work with different PKs
             end
           end
