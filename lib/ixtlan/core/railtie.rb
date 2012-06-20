@@ -63,8 +63,7 @@ module Ixtlan
         
         if defined? ::DataMapper
 
-          ::DataMapper::Resource.send(:include, 
-                                      Ixtlan::Core::DataMapper)
+          ::DataMapper::Model.append_inclusions(Ixtlan::Core::DataMapper)
 
         elsif defined? ::ActiveRecord
 

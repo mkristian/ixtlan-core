@@ -5,13 +5,11 @@ module Ixtlan
       def self.included(base)
         base.class_eval do
           
-          attr_accessor :current_user
-          
-          def optimistic_find(updated_at, *args)
+          def self.optimistic_get(updated_at, *args)
             if updated_at
-              updated_at = new(:updated_at => updated_at).updated_at
+              updated_at_date = new(:updated_at => updated_at).updated_at
               # TODO make it work with different PKs
-              first(:id => args[0], :updated_at => updated_at)
+              first(:id => args[0], :updated_at.gte => updated_at_date - 0.0005, :updated_at.lte => updated_at_date + 0.0005)
             end
           end
         end
