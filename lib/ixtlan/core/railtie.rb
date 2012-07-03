@@ -34,7 +34,9 @@ module Ixtlan
     end
 
     class Railtie < Rails::Railtie
-      config.generators do |config|
+
+      gmethod = config.respond_to?(:generators)? :generators : :app_generators
+      config.send(gmethod) do |config|
         
         config.templates << File.expand_path('../../../generators/rails', __FILE__)
 
