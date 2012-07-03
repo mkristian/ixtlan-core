@@ -3,6 +3,7 @@ module Ixtlan
     module ActiveRecord
 
       def self.included(base)
+        warn 'deprecated: use ixtlan-optimistic instead'
         base.class_eval do
 
           def self.optimistic_find(updated_at, *args)

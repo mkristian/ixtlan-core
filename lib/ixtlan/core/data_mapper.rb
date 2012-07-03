@@ -2,7 +2,8 @@ module Ixtlan
   module Core
     module DataMapper
 
-      def self.included(base)
+      def self.included(base)        
+        warn 'deprecated: use ixtlan-optimistic instead'
         base.class_eval do
           
           def self.optimistic_get(updated_at, *args)
