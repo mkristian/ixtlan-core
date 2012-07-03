@@ -1,7 +1,7 @@
 # -*- mode: ruby -*-
 Gem::Specification.new do |s|
   s.name = 'ixtlan-core'
-  s.version = '0.7.5'
+  s.version = '0.8.0'
 
   s.summary = 'cache header control, dynamic configuration, and optimistic find on model via updated_at timestamp'
   s.description = s.summary
