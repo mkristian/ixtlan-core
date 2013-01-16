@@ -1,7 +1,7 @@
 # Ixtlan #
 
 this gem adds more security related headers to the response for a rails3 application. mainly inspired by
-[google-gets-a-1-for-browser-security](http://www.barracudalabs.com/wordpress/index.php/2011/07/21/google-gets-a-1-for-browser-security-3/)
+[google-gets-a-1-for-browser-security](http://www.barracudalabs.com/wordpress/index.php/2011/07/21/)
 and
 [HttpCaching](http://code.google.com/p/doctype/wiki/ArticleHttpCaching).
 and

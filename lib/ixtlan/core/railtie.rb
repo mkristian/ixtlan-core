@@ -3,8 +3,6 @@ require 'ixtlan/core/cache_headers'
 require 'ixtlan/core/x_frame_headers'
 require 'ixtlan/core/x_content_type_headers'
 require 'ixtlan/core/x_xss_protection_headers'
-require 'ixtlan/core/active_record'
-require 'ixtlan/core/data_mapper'
 require 'ixtlan/core/configuration_rack'
 require 'ixtlan/core/configuration_manager'
 module Ixtlan
@@ -62,17 +60,6 @@ module Ixtlan
 
       config.after_initialize do |app|
         app.config.configuration_manager.setup(app.config.configuration_model) if app.config.respond_to? :configuration_model
-        
-        if defined? ::DataMapper
-
-          ::DataMapper::Model.append_inclusions(Ixtlan::Core::DataMapper)
-
-        elsif defined? ::ActiveRecord
-
-          ::ActiveRecord::Base.send(:include, 
-                                    Ixtlan::Core::ActiveRecord)
-
-        end
       end
     end
   end
